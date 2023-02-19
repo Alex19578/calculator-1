@@ -119,47 +119,42 @@ body {
    
   <script>
 
+// Select all necessary DOM elements
+const numberButtons = document.querySelectorAll(".num-button");
+const allButtons = document.querySelectorAll(".button");
+const resultBox = document.querySelector("#result-box");
+const clearButton = document.querySelector('#clear');
+const totalButton = document.querySelector("#total");
 
-let btns = document.querySelectorAll(".num-button");
-let allBtns = document.querySelectorAll(".button");
-let resultBox = document.querySelector("#result-box");
-let clearBtn = document.querySelector('#clear');
+// Convert node lists to arrays for easier manipulation
+const numberButtonsArray = Array.from(numberButtons);
+const allButtonsArray = Array.from(allButtons);
 
-let total = document.querySelector("#total");
-
-let btnSpread = [...btns];
-let allBtnSpread = [...allBtns];
-
-// For Number Inputs
-btnSpread.forEach((button, i) => {
+// Attach event listeners to number buttons
+numberButtonsArray.forEach(button => {
   button.addEventListener("click", () => {
-    // Inner Values for calculator
-
-    if (resultBox.innerHTML == "0") {
-      resultBox.innerHTML = "";
+    if (resultBox.textContent === "0") {
+      resultBox.textContent = "";
     }
 
-    let value = btns[i].innerHTML;
-    resultBox.innerHTML += value;
+    const value = button.textContent;
+    resultBox.textContent += value;
   });
 });
 
+// Evaluate mathematical expression when "Total" button is clicked
+totalButton.addEventListener('click', ()=> {
+  const expression = resultBox.textContent;
+  const result = eval(expression);
+  
+  resultBox.textContent = result.toString();
+});
 
-function evaluate(fn) {
-    return new Function('return ' + fn)();
-}
-total.addEventListener('click', ()=> {
-let allInputs = resultBox.innerHTML;
+// Reset result box to 0 when "Clear" button is clicked
+clearButton.addEventListener('click', ()=> {
+    resultBox.textContent = "0";
+});
 
-resultBox.innerHTML = evaluate(allInputs);
-
-console.log(evaluate(allInputs));
-})
-
-clearBtn.addEventListener('click', ()=> {
-    resultBox.innerHTML = "0";
-})
- 
 
 </script>
 
